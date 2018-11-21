@@ -54,7 +54,7 @@ def noise_extract(im: np.ndarray, levels: int = 4, sigma: float = 5) -> np.ndarr
     :param im: grayscale or color image, np.uint8
     :param levels: number of wavelet decomposition levels
     :param sigma: estimated noise power
-    :return:
+    :return: noise residual
     """
 
     assert (im.dtype == np.uint8)
@@ -118,7 +118,7 @@ def noise_extract_compact(args):
     """
     Extract residual, multiplied by the image. Useful to save memory in multiprocessing operations
     :param args: (im, levels, sigma), see noise_extract for usage
-    :return:
+    :return: residual, multiplied by the image
     """
     w = noise_extract(*args)
     im = args[0]
@@ -129,10 +129,13 @@ def extract_multiple_aligned(imgs: list, levels: int = 4, sigma: float = 5, proc
                              batch_size=cpu_count(), tqdm_str: str = '') -> np.ndarray:
     """
     Extract PRNU from a list of images. Images are supposed to be the same size and properly oriented
+    :param tqdm_str: tqdm description (see tqdm documentation)
+    :param batch_size: number of parallel processed images
+    :param processes: number of parallel processes
     :param imgs: list of images of size (H,W,Ch) and type np.uint8
-    :param levels:
-    :param sigma:
-    :return:
+    :param levels: number of wavelet decomposition levels
+    :param sigma: estimated noise power
+    :return: PRNU
     """
     assert (isinstance(imgs[0], np.ndarray))
     assert (imgs[0].ndim == 3)
@@ -183,7 +186,7 @@ def cut_ctr(array: np.ndarray, sizes: tuple) -> np.ndarray:
     Cut a multi-dimensional array at its center, according to sizes
     :param array: multidimensional array
     :param sizes: tuple of the same length as array.ndim
-    :return:
+    :return: multidimensional array, center cut
     """
     array = array.copy()
     if not (array.ndim == len(sizes)):
@@ -205,9 +208,9 @@ def cut_ctr(array: np.ndarray, sizes: tuple) -> np.ndarray:
 def wiener_dft(im: np.ndarray, sigma: float) -> np.ndarray:
     """
     Adaptive Wiener filter applied to the 2D FFT of the image
-    :param im:
-    :param sigma:
-    :return:
+    :param im: multidimensional array
+    :param sigma: estimated noise power
+    :return: filtered version of input im
     """
     noise_var = sigma ** 2
     h, w = im.shape
@@ -231,8 +234,8 @@ def wiener_dft(im: np.ndarray, sigma: float) -> np.ndarray:
 def zero_mean(im: np.ndarray) -> np.ndarray:
     """
     ZeroMean called with the 'both' argument, as from Binghamton toolbox.
-    :param im:
-    :return:
+    :param im: multidimensional array
+    :return: zero mean version of input im
     """
     # Adapt the shape ---
     if im.ndim == 2:
@@ -265,8 +268,8 @@ def zero_mean(im: np.ndarray) -> np.ndarray:
 def zero_mean_total(im: np.ndarray) -> np.ndarray:
     """
     ZeroMeanTotal as from Binghamton toolbox.
-    :param im:
-    :return:
+    :param im: multidimensional array
+    :return: zero mean version of input im
     """
     im[0::2, 0::2] = zero_mean(im[0::2, 0::2])
     im[1::2, 0::2] = zero_mean(im[1::2, 0::2])
@@ -278,8 +281,8 @@ def zero_mean_total(im: np.ndarray) -> np.ndarray:
 def rgb2gray(im: np.ndarray) -> np.ndarray:
     """
     RGB to gray as from Binghamton toolbox.
-    :param im:
-    :return:
+    :param im: multidimensional array
+    :return: grayscale version of input im
     """
     rgb2gray_vector = np.asarray([0.29893602, 0.58704307, 0.11402090]).astype(np.float32)
     rgb2gray_vector.shape = (3, 1)
@@ -304,7 +307,7 @@ def threshold(wlet_coeff_energy_avg: np.ndarray, noise_var: float) -> np.ndarray
     Noise variance theshold as from Binghamton toolbox.
     :param wlet_coeff_energy_avg:
     :param noise_var:
-    :return:
+    :return: noise variance threshold
     """
     res = wlet_coeff_energy_avg - noise_var
     return (res + np.abs(res)) / 2
@@ -319,7 +322,7 @@ def wiener_adaptive(x: np.ndarray, noise_var: float, **kwargs) -> np.ndarray:
     :param x: 2D matrix
     :param noise_var: Power spectral density of the noise we wish to extract (S)
     :param window_size_list: list of window sizes
-    :return:
+    :return: wiener filtered version of input x
     """
     window_size_list = list(kwargs.pop('window_size_list', [3, 5, 7, 9]))
 
@@ -343,7 +346,7 @@ def inten_scale(im: np.ndarray) -> np.ndarray:
     """
     IntenScale as from Binghamton toolbox
     :param im: type np.uint8
-    :return:
+    :return: intensity scaled version of input x
     """
 
     assert (im.dtype == np.uint8)
@@ -360,7 +363,7 @@ def saturation(im: np.ndarray) -> np.ndarray:
     """
     Saturation as from Binghamton toolbox
     :param im: type np.uint8
-    :return:
+    :return: saturation map from input im
     """
     assert (im.dtype == np.uint8)
 
@@ -403,7 +406,7 @@ def inten_sat_compact(args):
     """
     Memory saving version of inten_scale followed by saturation. Useful for multiprocessing
     :param args:
-    :return:
+    :return: intensity scale and saturation of input
     """
     im = args[0]
     return ((inten_scale(im) * saturation(im)) ** 2).astype(np.float32)
@@ -509,8 +512,8 @@ def stats(cc: np.ndarray, gt: np.ndarray, ) -> dict:
     """
     Compute statistics
     :param cc: cross-correlation or normalized cross-correlation matrix
-    :param gt:
-    :return:
+    :param gt: boolean multidimensional array representing groundtruth
+    :return: statistics dictionary
     """
     assert (cc.shape == gt.shape)
     assert (gt.dtype == np.bool)
@@ -541,7 +544,7 @@ def gt(l1: list or np.ndarray, l2: list or np.ndarray) -> np.ndarray:
     Determine the Ground Truth matrix given the labels
     :param l1: fingerprints labels
     :param l2: residuals labels
-    :return:
+    :return: groundtruth matrix
     """
     l1 = np.array(l1)
     l2 = np.array(l2)
