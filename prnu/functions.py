@@ -3,6 +3,7 @@
 @author: Luca Bondi (luca.bondi@polimi.it)
 @author: Paolo Bestagini (paolo.bestagini@polimi.it)
 @author: Nicolò Bonettini (nicolo.bonettini@polimi.it)
+Politecnico di Milano 2018
 """
 
 from multiprocessing import Pool, cpu_count
@@ -127,8 +128,8 @@ def noise_extract_compact(args):
 def extract_multiple_aligned(imgs: list, levels: int = 4, sigma: float = 5, processes: int = None,
                              batch_size=cpu_count(), tqdm_str: str = '') -> np.ndarray:
     """
-    Extract PRNU from a list of images
-    :param imgs: ndarray of size (N,H,W,Ch) and type np.uint8
+    Extract PRNU from a list of images. Images are supposed to be the same size and properly oriented
+    :param imgs: list of images of size (H,W,Ch) and type np.uint8
     :param levels:
     :param sigma:
     :return:
@@ -138,7 +139,6 @@ def extract_multiple_aligned(imgs: list, levels: int = 4, sigma: float = 5, proc
     assert (imgs[0].dtype == np.uint8)
 
     h, w, ch = imgs[0].shape
-    n = len(imgs)
 
     RPsum = np.zeros((h, w, ch), np.float32)
     NN = np.zeros((h, w, ch), np.float32)
