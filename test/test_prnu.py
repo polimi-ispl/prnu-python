@@ -5,21 +5,20 @@
 @author: Nicolò Bonettini (nicolo.bonettini@polimi.it)
 """
 import os
-
 import unittest
-import torch
-
-import numpy as np
-from PIL import Image
 from glob import glob
 from multiprocessing import cpu_count, Pool
 
-from modules.Prnu import Prnu
-from modules.utils import ArgumentError, cut_ctr
+import numpy as np
+import torch
+from PIL import Image
+
+from prnu import ArgumentError, cut_ctr
 
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
+
 
 class TestPrnu(unittest.TestCase):
 
@@ -222,7 +221,7 @@ class TestPrnu(unittest.TestCase):
             for img_path in ff_dirlist[ff_device == device]:
                 im = Image.open(img_path)
                 im_arr = np.asarray(im)
-                im_cut = cut_ctr(im_arr,(512, 512, 3))
+                im_cut = cut_ctr(im_arr, (512, 512, 3))
                 imgs += [im_cut]
             k += [prnu.extract_multiple(imgs, processes=cpu_count())]
 
