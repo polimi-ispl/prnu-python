@@ -55,7 +55,7 @@ class TestPrnu(unittest.TestCase):
         peak_height = cc[max_y, max_x]
 
         self.assertSequenceEqual((peak_y, peak_x), (y_os, x_os))
-        self.assertTrue(np.allclose(peak_height, 662901.0))
+        self.assertTrue(np.allclose(peak_height, 666995.0))
 
     def test_pce(self):
         im = np.asarray(Image.open('data/prnu1.jpg'))[:500, :400]
@@ -72,10 +72,10 @@ class TestPrnu(unittest.TestCase):
         pce2 = prnu.pce(cc2)
 
         self.assertSequenceEqual(pce1['peak'], (im.shape[0] - y_os - 1, im.shape[1] - x_os - 1))
-        self.assertTrue(np.allclose(pce1['pce'], 134791.14398835122))
+        self.assertTrue(np.allclose(pce1['pce'], 134611.58644973233))
 
         self.assertSequenceEqual(pce2['peak'], (y_os - 1, x_os - 1))
-        self.assertTrue(np.allclose(pce2['pce'], 134797.4600680655))
+        self.assertTrue(np.allclose(pce2['pce'], 134618.03404934643))
 
     def test_gt(self):
         cams = ['a', 'b', 'c', 'd']
