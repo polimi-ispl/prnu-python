@@ -83,7 +83,7 @@ def main():
     stats_pce = prnu.stats(pce_rot, gt)
 
     print('AUC on CC {:.2f}, expected {:.2f}'.format(stats_cc['auc'], 0.98))
-    print('AUC on PCE {:.2f}, expected {:.2f}'.format(stats_pce['auc'], 0.83))
+    print('AUC on PCE {:.2f}, expected {:.2f}'.format(stats_pce['auc'], 0.81))
 
 
 if __name__ == '__main__':
