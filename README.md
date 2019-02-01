@@ -1,3 +1,8 @@
+
+
+[![DOI](https://zenodo.org/badge/158570703.svg)](https://zenodo.org/badge/latestdoi/158570703)
+
+
 # Python porting of PRNU extractor and helper functions
 
 ## Authors
