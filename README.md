@@ -1,6 +1,7 @@
 
 
 [![DOI](https://zenodo.org/badge/158570703.svg)](https://zenodo.org/badge/latestdoi/158570703)
+<image src="https://api.travis-ci.org/polimi-ispl/prnu-python.svg?branch=master&status=created">
 
 
 # Python porting of PRNU extractor and helper functions
