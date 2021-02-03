@@ -1,0 +1,16 @@
+language: python
+python:
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7"
+  - "3.8"
+  - "3.9"
+# dependencies
+install:
+  - pip install numpy pillow pywavelets scipy scikit-learn tqdm
+before_script:
+  - cd test
+# command to run tests
+script:
+  - python -m unittest test_prnu.TestPrnu
