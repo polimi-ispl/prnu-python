@@ -5,6 +5,8 @@
 @author: Nicolò Bonettini (nicolo.bonettini@polimi.it)
 Politecnico di Milano 2018
 """
+import sys
+sys.path.insert(0, '..')
 import os
 import unittest
 
