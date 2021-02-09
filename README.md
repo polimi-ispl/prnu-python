@@ -3,7 +3,8 @@
 # Python porting of PRNU extractor and helper functions
 
 [![DOI](https://zenodo.org/badge/158570703.svg)](https://zenodo.org/badge/latestdoi/158570703)
-<image src="https://api.travis-ci.org/polimi-ispl/prnu-python.svg?branch=master&status=created">
+[<image src="https://api.travis-ci.org/polimi-ispl/prnu-python.svg?branch=master">](https://travis-ci.org/github/polimi-ispl/python_patch_extractor)
+
 
 ## Authors
 - Luca Bondi (luca.bondi@polimi.it)
