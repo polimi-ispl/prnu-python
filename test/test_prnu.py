@@ -13,7 +13,7 @@ import unittest
 import numpy as np
 from PIL import Image
 
-import prnu
+from src import prnu
 
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)

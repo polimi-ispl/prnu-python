@@ -13,7 +13,7 @@ from multiprocessing import cpu_count, Pool
 import numpy as np
 from PIL import Image
 
-import prnu
+from src import prnu
 
 
 def main():

@@ -60,3 +60,4 @@ target/
 \.idea/
 
 \.DS_Store
+venv
