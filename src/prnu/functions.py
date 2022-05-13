@@ -5,7 +5,7 @@
 @author: Nicolò Bonettini (nicolo.bonettini@polimi.it)
 Politecnico di Milano 2018
 """
-
+from functools import lru_cache
 from multiprocessing import Pool, cpu_count
 
 import numpy as np
@@ -25,6 +25,7 @@ Extraction functions
 """
 
 
+@lru_cache()
 def extract_single(im: np.ndarray,
                    levels: int = 4,
                    sigma: float = 5,
@@ -47,6 +48,7 @@ def extract_single(im: np.ndarray,
     return W
 
 
+@lru_cache()
 def noise_extract(im: np.ndarray, levels: int = 4, sigma: float = 5) -> np.ndarray:
     """
     NoiseExtract as from Binghamton toolbox.
@@ -114,6 +116,7 @@ def noise_extract(im: np.ndarray, levels: int = 4, sigma: float = 5) -> np.ndarr
     return W
 
 
+@lru_cache()
 def noise_extract_compact(args):
     """
     Extract residual, multiplied by the image. Useful to save memory in multiprocessing operations
@@ -181,6 +184,7 @@ def extract_multiple_aligned(imgs: list, levels: int = 4, sigma: float = 5, proc
     return K
 
 
+@lru_cache()
 def cut_ctr(array: np.ndarray, sizes: tuple) -> np.ndarray:
     """
     Cut a multi-dimensional array at its center, according to sizes
@@ -205,6 +209,7 @@ def cut_ctr(array: np.ndarray, sizes: tuple) -> np.ndarray:
     return array
 
 
+@lru_cache()
 def wiener_dft(im: np.ndarray, sigma: float) -> np.ndarray:
     """
     Adaptive Wiener filter applied to the 2D FFT of the image
@@ -231,6 +236,7 @@ def wiener_dft(im: np.ndarray, sigma: float) -> np.ndarray:
     return im_noise_filt.astype(np.float32)
 
 
+@lru_cache()
 def zero_mean(im: np.ndarray) -> np.ndarray:
     """
     ZeroMean called with the 'both' argument, as from Binghamton toolbox.
@@ -265,6 +271,7 @@ def zero_mean(im: np.ndarray) -> np.ndarray:
     return i_zm_rc
 
 
+@lru_cache()
 def zero_mean_total(im: np.ndarray) -> np.ndarray:
     """
     ZeroMeanTotal as from Binghamton toolbox.
@@ -278,6 +285,7 @@ def zero_mean_total(im: np.ndarray) -> np.ndarray:
     return im
 
 
+@lru_cache()
 def rgb2gray(im: np.ndarray) -> np.ndarray:
     """
     RGB to gray as from Binghamton toolbox.
@@ -313,6 +321,7 @@ def threshold(wlet_coeff_energy_avg: np.ndarray, noise_var: float) -> np.ndarray
     return (res + np.abs(res)) / 2
 
 
+@lru_cache()
 def wiener_adaptive(x: np.ndarray, noise_var: float, **kwargs) -> np.ndarray:
     """
     WaveNoise as from Binghamton toolbox.
@@ -342,6 +351,7 @@ def wiener_adaptive(x: np.ndarray, noise_var: float, **kwargs) -> np.ndarray:
     return x
 
 
+@lru_cache()
 def inten_scale(im: np.ndarray) -> np.ndarray:
     """
     IntenScale as from Binghamton toolbox
@@ -359,6 +369,7 @@ def inten_scale(im: np.ndarray) -> np.ndarray:
     return out
 
 
+@lru_cache()
 def saturation(im: np.ndarray) -> np.ndarray:
     """
     Saturation as from Binghamton toolbox
@@ -402,6 +413,7 @@ def saturation(im: np.ndarray) -> np.ndarray:
     return satur_map
 
 
+@lru_cache()
 def inten_sat_compact(args):
     """
     Memory saving version of inten_scale followed by saturation. Useful for multiprocessing
