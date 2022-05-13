@@ -7,9 +7,15 @@
 
 
 ## Authors
-- Luca Bondi (luca.bondi@polimi.it)
-- Paolo Bestagini (paolo.bestagini@polimi.it)
-- Nicolò Bonettini (nicolo.bonettini@polimi.it)
+- Luca Bondi ([luca.bondi@polimi.it](mailto:luca.bondi@polimi.it))
+- Paolo Bestagini ([paolo.bestagini@polimi.it](mailto:paolo.bestagini@polimi.it))
+- Nicolò Bonettini ([nicolo.bonettini@polimi.it](mailto:nicolo.bonettini@polimi.it))
+- Andrea Bruno ([andbruno@unisa.it](mailto:andbruno@unisa.it)) - Python package
+
+## Installation
+```
+python3 -m pip install git+https://github.com/DIFLabUnisa/prnu-python
+```
 
 ## Usage
 See *example.py*
