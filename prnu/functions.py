@@ -304,7 +304,7 @@ def rgb2gray(im: np.ndarray) -> np.ndarray:
 
 def threshold(wlet_coeff_energy_avg: np.ndarray, noise_var: float) -> np.ndarray:
     """
-    Noise variance theshold as from Binghamton toolbox.
+    Noise variance threshold as from Binghamton toolbox.
     :param wlet_coeff_energy_avg:
     :param noise_var:
     :return: noise variance threshold
